@@ -18,8 +18,9 @@ public class RaceController {
     }
 
     @GetMapping
-    public List<Race> getAll() {
-        return raceServices.getAll();
+    public List<Race> getAll(@RequestParam(required = false) String location) {
+        // exemple d'url avec postman : {{baseUrl}}/races?location=Paris
+        return raceServices.getAll(location);
     }
 
     @GetMapping("/{id}")

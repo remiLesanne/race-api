@@ -18,9 +18,9 @@ public class RaceServices {
         this.raceRepository = raceRepository;
     }
 
-    public List<Race> getAll() {
-        return raceRepository.findAll();
-    }
+//    public List<Race> getAll() {
+//        return raceRepository.findAll();
+//    }
 
     public Race getById(Long id) {
         return raceRepository.findById(id).orElseThrow(() ->
@@ -30,7 +30,7 @@ public class RaceServices {
                 ));
     }
 
-    public Race create(Race race){
+    public Race create(Race race) {
         return raceRepository.save(race);
     }
 
@@ -43,6 +43,13 @@ public class RaceServices {
         course.setMaxParticipants(race.getMaxParticipants());
 
         return raceRepository.save(course);
+    }
+
+    public List<Race> getAll(String location) {
+        if (location != null && !location.isEmpty()) {
+            return raceRepository.findByLocation(location);
+        }
+        return raceRepository.findAll();
     }
 
 }
