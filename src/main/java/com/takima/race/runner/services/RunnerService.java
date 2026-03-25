@@ -32,6 +32,7 @@ public class RunnerService {
 
 
     public Runner create(Runner runner) {
+        validateEmail(runner.getEmail());
         return runnerRepository.save(runner);
     }
 
@@ -42,11 +43,23 @@ public class RunnerService {
         bob.setEmail(runner.getEmail());
         bob.setAge(runner.getAge());
 
+        //verif
+        validateEmail(runner.getEmail());
+
         return runnerRepository.save(bob);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         Runner bob = getById(id);
         runnerRepository.delete(bob);
+    }
+
+    public void validateEmail(String email) {
+        if (!email.contains("@")) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Email must contain @"
+            );
+        }
     }
 }
